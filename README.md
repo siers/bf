@@ -1,6 +1,6 @@
 About
 =====
-Once upon a time, an austrian guy named Ben made a brainfuck interpreter in C++. I thought I want to make one as well, so I did. But because I wanted direct access to stack I wrote the interpreter itself in x86 assembler(nothing really smart was used) and wrapped with C.
+Once upon a time, an austrian guy named Ben made a brainfuck interpreter in haskell. I thought I want to make one as well, so I did. But because I wanted direct access to stack I wrote the interpreter itself in x86 assembler(nothing really smart was used) and wrapped with C.
 
 Demo
 ====
