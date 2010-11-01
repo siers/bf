@@ -4,12 +4,12 @@ Once upon a time, an austrian guy named Ben made a brainfuck interpreter in C++.
 
 Demo
 ====
-% cat s.bf
-,---------------------------[+++++++++++++++++++++++++++.----------------------------]
-[-]++++++++++.
-[-]++++++++++++++++++++++++++++++++++++++++++++++++...+..+.
-% echo Z | ./bin/main s.bf
-Interpreting started. (buf: 0x87f2008; size: 162)
-ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543210/.-,+*)('&%$#"!
-000112
-Interpreter returned: 0xa. Time: 90654 nanoseconds
+ % cat s.bf
+ ,---------------------------[+++++++++++++++++++++++++++.----------------------------]
+ [-]++++++++++.
+ [-]++++++++++++++++++++++++++++++++++++++++++++++++...+..+.
+ % echo Z | ./bin/main s.bf
+ Interpreting started. (buf: 0x87f2008; size: 162)
+ ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543210/.-,+*)('&%$#"!
+ 000112
+ Interpreter returned: 0xa. Time: 90654 nanoseconds
