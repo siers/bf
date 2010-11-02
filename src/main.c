@@ -52,13 +52,19 @@ int main(int argc, char** argv)
     clock_gettime(CLOCK_REALTIME, &end_time);
 
     printf("\n");
-    if (start_time.tv_sec - end_time.tv_sec == 0
-            || start_time.tv_nsec - end_time.tv_nsec < 0)
+    if (labs(end_time.tv_nsec - start_time.tv_nsec) < 50000 &&
+            end_time.tv_sec - start_time.tv_sec < 2)
         fprintf(stderr, "Interpreter returned: 0x%x. Time: %li nanoseconds.\n",
-                c, labs(start_time.tv_nsec - end_time.tv_nsec));
+                c, labs(end_time.tv_nsec - start_time.tv_nsec));
     else
-        fprintf(stderr, "Interpreter returned: 0x%x. Time: %.5f seconds.\n",
-                c, start_time.tv_sec - end_time.tv_sec +
-                        (start_time.tv_nsec - end_time.tv_nsec) / 1000000000.0);
+        if (labs(end_time.tv_nsec - start_time.tv_nsec) < 50000000 &&
+                end_time.tv_sec - start_time.tv_sec < 2)
+            fprintf(stderr,
+                    "Interpreter returned: 0x%x. Time: %.5f microseconds.\n",
+                    c, labs(end_time.tv_nsec - start_time.tv_nsec) / 1000000.0);
+        else
+            fprintf(stderr, "Interpreter returned: 0x%x. Time: %.5f seconds.\n",
+                    c, end_time.tv_sec - start_time.tv_sec +
+                    (end_time.tv_nsec - start_time.tv_nsec) / 1000000000.0);
     return 0;
 }
