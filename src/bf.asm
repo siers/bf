@@ -60,10 +60,9 @@ loop:
 	jnl done
 
 	; Reading a byte from the buffer,
-	xor eax, eax
 	mov al, [edi+ecx]
 	; switch (eax) {{{
-	cmp eax, '+'
+	cmp al, '+'
 	jne ne1
 	; CASE + Increment *(data+doffset)
 	inc byte [data+esi]
@@ -138,7 +137,6 @@ ne6:cmp eax, '['
 ne7:cmp eax, ']'
 	jne unknown
 	cmp [ebp-8], esp
-	mov eax, 0xff
 	je done
 	pop ecx
 	jmp loop	; Break!
