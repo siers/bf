@@ -9,25 +9,77 @@
 
 #include "bf.h"
 
+
 extern char *__progname;
+
+int brackets_match(char* buf)
+{
+    int n;
+
+    for (; *buf; buf++) {
+        if (*buf == '[')
+            n++;
+        else if (*buf == ']') {
+            if (!n)
+                return -1;
+            else
+                n--;
+        }
+    }
+
+    return n;
+}
+
+int interpret(void)
+{
+    char p[256], buf[4096];
+    int n;
+
+    *buf = 0;
+    printf("* ");
+    fflush(stdout);
+    while ((n = scanf("%256s", p)) != -1) {
+        strncat(buf, p, 4096);
+        switch ((n = brackets_match(buf))) {
+            case -1:
+                *buf = 0;
+                printf("Unmatched brackets, clearing buffer.\n* ");
+                break;
+            case 0:
+                brainfuck(buf, strlen(buf));
+                *buf = 0;
+                printf("\n* ");
+                break;
+            default:
+                break;
+        }
+        fflush(stdout);
+    }
+    return 0;
+}
 
 int main(int argc, char** argv)
 {
     char *buf, *file;
-    int size = 0;
-    int c, fd;
+    int c, fd = 0, size = 0;
     struct timespec start_time, end_time;
 
-    while ((c = getopt (argc, argv, "q")) != -1)
+    while ((c = getopt (argc, argv, "qi")) != -1)
         switch (c) {
             case 'q':
                 close(STDERR_FILENO);
                 fcntl(open("/dev/null", O_WRONLY), F_DUPFD, STDERR_FILENO);
                 break;
+            case 'i':
+                fd = -1;
+                break;
             default:
-                printf("%i;Usage: %s [-q]\n", c, __progname);
+                printf("Usage: %s [-qi]\n", __progname);
                 return 1;
     }
+
+    if (fd == -1) /* If fd == -1, you thou shall interpret! */
+        return interpret();
 
     for (c = optind; c < argc; c++)
         file = argv[(unsigned int) c];
